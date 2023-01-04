@@ -20,7 +20,7 @@ class Envelope():
         self.postage = 0
         self.was_sent = False
     def send(self):
-        if self.postage >= postage_needed(self):
+        if self.postage >= self.postage_needed():
             self.was_sent = True
     def add_postage(self, postage):
         self.postage += postage
@@ -206,6 +206,16 @@ class Zoo():
     def number_of_legs(self):
         return sum(animal.no_of_legs for cage in self.cages for animal in cage.animals)
 
+    def animals_by_legs_color(self, **kwargs):
+        output = []
+        for key, value in kwargs.items():
+            if key == "color":
+                output.append(animal for cage in self.cages for animal in cage.animals if animal.color == value)
+            if key == "legs":
+                output.append(animal for cage in self.cages for animal in cage.animals if animal.no_of_legs == value)
+
+            
+
 w = Wolf("Grey")
 p = Parrot("Red")
 print(w)
@@ -218,5 +228,5 @@ z = Zoo("Houston")
 z.add_cage(c1)
 print(z.animals_by_legs(4))
 print(z)
-print(z.number_of_legs())
+print(z.animals_by_legs_color({"color":"Gray"}))
 create_scoop()
